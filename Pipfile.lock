@@ -1,11 +1,11 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "adef0fd395ee76b5e846c4d124a4ed89c82f396d2e41a4ea4842dcbf761f28aa"
+            "sha256": "8b0a88fa3530ab8fc1dc1255995de89107a8d6b2cb3d7aa34c80999ad74bde00"
         },
         "pipfile-spec": 6,
         "requires": {
-            "python_version": "3.13"
+            "python_version": "3.11"
         },
         "sources": [
             {
@@ -168,11 +168,11 @@
         },
         "anyio": {
             "hashes": [
-                "sha256:73c693b567b0c55130c104d0b43a9baf3aa6a31fc6110116509f27bf75e21ec0",
-                "sha256:dad2376a628f98eeca4881fc56cd06affd18f659b17a747d3ff0307ced94b1bb"
+                "sha256:41cfcc3a4c85d3f05c932da7c26d0201ac36f72abd4435ba90d0464a3ffed703",
+                "sha256:d405828884fc140aa80a3c667b8beed277f1dfedec42ba031bd6ac3db606ab6c"
             ],
             "markers": "python_version >= '3.9'",
-            "version": "==4.12.0"
+            "version": "==4.12.1"
         },
         "attrs": {
             "hashes": [
@@ -642,11 +642,11 @@
         },
         "google-auth": {
             "hashes": [
-                "sha256:82344e86dc00410ef5382d99be677c6043d72e502b625aa4f4afa0bdacca0f36",
-                "sha256:90d3f41b6b72ea72dd9811e765699ee491ab24139f34ebf1ca2b9cc0c38708f3"
+                "sha256:cb04c071a73394a6e3b9e48c1a7f48506001175b33e9679587a0f5320a21a34d",
+                "sha256:fa51659c3745cb7024dd073f4ab766222767ea5f7dee2472110eaa03c9dbd2cb"
             ],
             "markers": "python_version >= '3.7'",
-            "version": "==2.45.0"
+            "version": "==2.46.0"
         },
         "googleapis-common-protos": {
             "hashes": [
@@ -977,6 +977,7 @@
                 "sha256:131d83a02bb80044c68fedc1ab4ae885d5b8f8c2c742d8ab9e7534ad9cda8e80",
                 "sha256:40a499684df36b005a1213735dc7f8dca8f5eb67978d6ec763e7a49780864fdc"
             ],
+            "index": "pypi",
             "markers": "python_full_version >= '3.10.0' and python_full_version < '4.0.0'",
             "version": "==1.0.1"
         },
@@ -994,6 +995,7 @@
                 "sha256:aa6ed954b4b1f4504937fe75fdf674317027e9a91ba7a97558b0de3dc8004e34",
                 "sha256:b4e7841dd7f8690375aa07c54739178dc2c635147d475e0c2955bf82a1afa498"
             ],
+            "index": "pypi",
             "markers": "python_full_version >= '3.10.0' and python_full_version < '4.0.0'",
             "version": "==1.2.6"
         },
@@ -3061,14 +3063,6 @@
             "markers": "python_version >= '3.10'",
             "version": "==5.2.0"
         },
-        "setuptools": {
-            "hashes": [
-                "sha256:062d34222ad13e0cc312a4c02d73f059e86a4acbfbdea8f8f76b28c99f306922",
-                "sha256:f36b47402ecde768dbfafc46e8e4207b4360c654f1f3bb84475f0a28628fb19c"
-            ],
-            "markers": "python_version >= '3.9'",
-            "version": "==80.9.0"
-        },
         "shellingham": {
             "hashes": [
                 "sha256:7ecfff8f2fd72616f7481040475a65b2bf8af90a56c89140852d1120324e8686",
@@ -3249,11 +3243,11 @@
         },
         "typer": {
             "hashes": [
-                "sha256:c79c01ca6b30af9fd48284058a7056ba0d3bf5cf10d0ff3d0c5b11b68c258ac6",
-                "sha256:c87c0d2b6eee3b49c5c64649ec92425492c14488096dfbc8a0c2799b2f6f9c53"
+                "sha256:7985e89081c636b88d172c2ee0cfe33c253160994d47bdfdc302defd7d1f1d01",
+                "sha256:ea835607cd752343b6b2b7ce676893e5a0324082268b48f27aa058bdb7d2145d"
             ],
             "markers": "python_version >= '3.9'",
-            "version": "==0.21.0"
+            "version": "==0.21.1"
         },
         "typing-extensions": {
             "hashes": [
@@ -4044,11 +4038,11 @@
         },
         "pathspec": {
             "hashes": [
-                "sha256:a0d503e138a4c123b27490a4f7beda6a01c6f288df0e4a8b79c7eb0dc7b4cc08",
-                "sha256:a482d51503a1ab33b1c67a6c3813a26953dbdc71c31dacaef9a838c4e29f5712"
+                "sha256:8870061f22c58e6d83463cfce9a7dd6eca0512c772c1001fb09ac64091816721",
+                "sha256:e2769b508d0dd47b09af6ee2c75b2744a2cb1f474ae4b1494fd6a1b7a841613c"
             ],
-            "markers": "python_version >= '3.8'",
-            "version": "==0.12.1"
+            "markers": "python_version >= '3.9'",
+            "version": "==1.0.1"
         },
         "platformdirs": {
             "hashes": [
