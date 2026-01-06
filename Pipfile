@@ -5,6 +5,12 @@ name = "pypi"
 
 [packages]
 datasets = "*"
+langchain = "*"
+langchain-huggingface = "*"
+langchain-community = "*"
+chromadb = "*"
+sentence-transformers = "*"
+langchain-chroma = "*"
 
 [dev-packages]
 black = "*"
