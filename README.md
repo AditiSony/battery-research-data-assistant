@@ -16,3 +16,6 @@ It contains abstracts of reserach papers related to battery technology as well a
   pages={DOI: 10.1021/acs.jcim.2c00035},
   publisher={ACS Publications}
 }
+
+## Data Ingestion and Storage
+data.py file contains code for the entire data ingestion process. It downloads the data from Hugging Face datasets repository, filters out any non-battery related data, create embeddings for each scientific paper abstract and saves it alongwith other metadata in a vector database (ChromaDB).
