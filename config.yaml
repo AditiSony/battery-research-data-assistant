@@ -1,0 +1,12 @@
+paths:
+  vector_db: "./vector_db"
+  data_cache: "./data_cache"
+
+models:
+  embeddings: "BAAI/bge-small-en-v1.5"
+  llm: "llama3"
+  device: "cpu"
+
+settings:
+  batch_size: 10
+  top_k: 3
