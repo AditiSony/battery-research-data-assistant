@@ -11,6 +11,7 @@ langchain-community = "*"
 chromadb = "*"
 sentence-transformers = "*"
 langchain-chroma = "*"
+langchain-ollama = "*"
 
 [dev-packages]
 black = "*"
