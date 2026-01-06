@@ -18,3 +18,4 @@ EMBED_MODEL = config["models"]["embeddings"]
 LLM_MODEL = config["models"]["llm"]
 DEVICE = config["models"].get("device", "cpu")
 BATCH_SIZE = config["settings"]["batch_size"]
+K = config["settings"]["top_k"]
