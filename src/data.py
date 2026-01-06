@@ -7,8 +7,7 @@ from langchain_chroma import Chroma
 from langchain_core.documents import Document
 from langchain_huggingface import HuggingFaceEmbeddings
 
-BATCH_SIZE = 10  # 500
-VECTOR_DB_DIR = "./vector_db"
+from settings import BATCH_SIZE, DEVICE, EMBED_MODEL, VECTOR_DB_DIR
 
 
 def data_ingestion():
@@ -22,15 +21,14 @@ def data_ingestion():
     battery_data = battery_data.select(range(10))
 
     # create vector embeddings for all docs
-    model_name = "BAAI/bge-small-en-v1.5"
     encode_kwargs = {"normalize_embeddings": True}
     query_encode_kwargs = {
         "prompt": "Represent this sentence for searching relevant passages: "
     }
 
     embeddings = HuggingFaceEmbeddings(
-        model_name=model_name,
-        model_kwargs={"device": "cpu"},
+        model_name=EMBED_MODEL,
+        model_kwargs={"device": DEVICE},
         encode_kwargs=encode_kwargs,
         query_encode_kwargs=query_encode_kwargs,
     )
