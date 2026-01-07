@@ -1,4 +1,5 @@
 import os
+import random
 import shutil
 import time
 
@@ -19,6 +20,15 @@ def data_ingestion():
     dataset = load_dataset("batterydata/paper-abstracts", split="train")
     battery_data = dataset.filter(lambda x: x["label"] == "battery")
     battery_data = battery_data.select(range(10))
+
+    # Add fictitious "journal" column
+    journals = ["Journal A", "Journal B", "Journal C", "Journal D"]
+
+    def add_journal(x):
+        x["journal"] = random.choice(journals)
+        return x
+
+    battery_data = battery_data.map(add_journal)
 
     # create vector embeddings for all docs
     encode_kwargs = {"normalize_embeddings": True}
@@ -42,7 +52,7 @@ def data_ingestion():
         Document(
             page_content=x["abstract"],
             metadata={
-                "source": "batterydata/paper-abstracts",
+                "source": x["journal"],
                 "category": x["label"],
                 "data_type": "scientific-abstract",
             },
