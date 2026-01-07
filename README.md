@@ -61,7 +61,7 @@ This project uses the **paper-abstracts** dataset provided by **batterydata** fr
 
 ## 🚀 Getting Started
 1. **Prerequisites**
-- Install [!Ollama](https://ollama.com/download/windows).
+- Install [Ollama](https://ollama.com/download/windows).
 - Download the model:
 
 ```Bash
