@@ -27,11 +27,11 @@ graph LR
 - **Local Implementation:** All embeddings and LLM processing stay on local machine using Ollama and HuggingFaceEmbeddings.
 
 ## 🛠 Tech Stack
-- `**Language:**` Python 3.11+
-- `**Orchestration:**` LangChain (LCEL)
-- `**LLM:**` Llama 3.2 (via Ollama)
-- `**Embeddings:**` BAAI/bge-small-en-v1.5
-- `**Vector Database:**` ChromaDB
+- **`Language:`** Python 3.11+
+- **`Orchestration:`** LangChain (LCEL)
+- **`LLM:`** Llama 3.2 (via Ollama)
+- **`Embeddings:`** BAAI/bge-small-en-v1.5
+- **`Vector Database:`** ChromaDB
 
 * Configured to run Llama 3.2 3B locally, optimized for GPUs with ~4GB VRAM (like the NVIDIA T500).
 
@@ -40,9 +40,9 @@ graph LR
 
 This project uses the **paper-abstracts** dataset provided by **batterydata** from Hugging Face datasets. It contains abstracts of research papers related to battery technology as well as many non-battery-related papers.
 
-- `**Filtering:**` Only abstracts labeled "battery" are ingested.
+- **`Filtering:`** Only abstracts labeled "battery" are ingested.
 
-- `**Augmentation:**` A fictitious `journal` column is programmatically added during ingestion to demonstrate the RAG pipeline's ability to cite specific sources.
+- **`Augmentation:`** A fictitious `journal` column is programmatically added during ingestion to demonstrate the RAG pipeline's ability to cite specific sources.
 
 **Citation**
 
@@ -60,7 +60,7 @@ This project uses the **paper-abstracts** dataset provided by **batterydata** fr
 ```
 
 ## 🚀 Getting Started
-1. Prerequisites
+1. **Prerequisites**
 - Install [!Ollama](https://ollama.com/download/windows).
 - Download the model:
 
@@ -68,7 +68,7 @@ This project uses the **paper-abstracts** dataset provided by **batterydata** fr
 ollama pull llama3.2
 ```
 
-2. Installation
+2. **Installation**
 - Clone the repository and install dependencies using Pipenv:
 
 ```Bash
@@ -76,7 +76,7 @@ pipenv install
 pipenv shell
 ```
 
-3. Usage
+3. **Usage**
 - Check config.yaml file to ensure all configurations are set as required.
 - Ingest Data: Create the vector database by processing the abstracts.
 
@@ -84,7 +84,7 @@ pipenv shell
 python src/data.py
 ```
 
--Start Assistant: Launch the interactive chat loop.
+- Start Assistant: Launch the interactive chat loop.
 
 ```Bash
 python src/rag.py
