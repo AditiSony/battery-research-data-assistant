@@ -6,7 +6,7 @@ Welcome to my learning project on building a "Research Assistant" tool, an intel
 ## 🏗 System Architecture
 This project uses a "History-Aware Retrieval" logic to ensure conversational continuity.
 ```mermaid
-graph TD
+graph LR
     A[User Query] --> B{Chat History?}
     B -- Yes --> C[Query Re-writer / LLM]
     C --> D[Enhanced Query]
