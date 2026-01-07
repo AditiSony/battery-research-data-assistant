@@ -1,15 +1,20 @@
 from langchain_chroma import Chroma
-from langchain_classic.chains import (
-    create_history_aware_retriever,
-    create_retrieval_chain,
-)
-from langchain_classic.chains.combine_documents import create_stuff_documents_chain
 from langchain_core.messages import AIMessage, HumanMessage
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
+from langchain_core.runnables import RunnableLambda, RunnablePassthrough
 from langchain_huggingface import HuggingFaceEmbeddings
 from langchain_ollama import ChatOllama
 
 from settings import DEVICE, EMBED_MODEL, LLM_MODEL, VECTOR_DB_DIR, K
+
+
+def format_docs_with_id(docs):
+    """Turns document objects into a numbered string for the LLM."""
+    formatted = []
+    for i, doc in enumerate(docs, 1):
+        source = doc.metadata.get("source", "Unknown")
+        formatted.append(f"Source [{i}] (File: {source}):\n{doc.page_content}")
+    return "\n\n".join(formatted)
 
 
 def get_rag_chain():
@@ -47,15 +52,14 @@ def get_rag_chain():
         ]
     )
 
-    history_aware_retriever = create_history_aware_retriever(
-        llm, retriever, context_prompt
-    )
+    question_generator = context_prompt | llm | RunnableLambda(lambda x: x.content)
 
     # Main RAG Prompt
     system_prompt = (
-        "You are a Battery Research Assistant. "
-        "Use the following pieces of retrieved context to answer the question. "
-        "If you don't know the answer, say that you don't know.\n\n"
+        "You are an expert battery researcher. Answer the question using ONLY the provided context. "
+        "Every time you reference a fact from the context, you MUST cite the source number "
+        "in square brackets immediately following the fact (e.g., 'LFP batteries have high safety [1].'). "
+        "At the end of your response, provide a 'References' list mapping the numbers to filenames.\n\n"
         "Context:\n{context}"
     )
 
@@ -67,11 +71,22 @@ def get_rag_chain():
         ]
     )
 
-    # combine retrieved docs into answer
-    qa_chain = create_stuff_documents_chain(llm, prompt)
-
     # Final RAG chain: Rephrase -> Retrieve -> Answer
-    return create_retrieval_chain(history_aware_retriever, qa_chain)
+    rag_chain = (
+        RunnablePassthrough.assign(
+            # re-write the question using history
+            standalone_question=question_generator,
+        ).assign(
+            # retrieve docs using the standalone question and format them
+            context=lambda x: format_docs_with_id(
+                retriever.invoke(x["standalone_question"])
+            )
+        )
+        | prompt
+        | llm
+    )
+
+    return rag_chain
 
 
 # function that stores chat history and runs chat loop until exit
@@ -88,10 +103,9 @@ def run_chat_loop():
             print("Goodbye!")
             break
 
-        # Process the question through the chain
+        # Process the query through the chain
         result = rag_chain.invoke({"input": user_input, "chat_history": chat_history})
-
-        answer = result["answer"]
+        answer = result.content
         print(f"\nAssistant: {answer}\n")
 
         # Update chat history for the next turn
