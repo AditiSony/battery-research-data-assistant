@@ -1,6 +1,5 @@
 paths:
   vector_db: "./vector_db"
-  data_cache: "./data_cache"
 
 models:
   embeddings: "BAAI/bge-small-en-v1.5"
@@ -8,5 +7,5 @@ models:
   device: "cuda"
 
 settings:
-  batch_size: 10
+  batch_size: 100
   top_k: 3
