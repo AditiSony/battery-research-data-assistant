@@ -2,6 +2,7 @@ import os
 import random
 import shutil
 import time
+import warnings
 
 from datasets import load_dataset
 from langchain_chroma import Chroma
@@ -13,22 +14,25 @@ from settings import BATCH_SIZE, DEVICE, EMBED_MODEL, VECTOR_DB_DIR
 
 def data_ingestion():
     if os.path.exists(VECTOR_DB_DIR):
-        print("Cleaning up old database")
-        shutil.rmtree(VECTOR_DB_DIR)
+        print(f"Database found at {VECTOR_DB_DIR}. Skipping ingestion.")
+        return
+
+    print("No database found. Starting fresh ingestion...")
 
     # read data from huggingface datasets and keep only battery-related data
     dataset = load_dataset("batterydata/paper-abstracts", split="train")
     battery_data = dataset.filter(lambda x: x["label"] == "battery")
-    battery_data = battery_data.select(range(10))
 
     # Add fictitious "journal" column
     journals = ["Journal A", "Journal B", "Journal C", "Journal D"]
+    battery_data = battery_data.map(lambda x: {"journal": random.choice(journals)})
 
-    def add_journal(x):
-        x["journal"] = random.choice(journals)
-        return x
-
-    battery_data = battery_data.map(add_journal)
+    batch_size = BATCH_SIZE
+    if len(battery_data) < batch_size:
+        warnings.warn(
+            f"Battery Dataset size ({len(battery_data)}) is smaller than selected batch size {batch_size}. Selecting all battery data for ingestion."
+        )
+        batch_size = len(battery_data)
 
     # create vector embeddings for all docs
     encode_kwargs = {"normalize_embeddings": True}
@@ -44,10 +48,10 @@ def data_ingestion():
     )
 
     # Store embeddings in Vector Database (ChromaDB)
-    print(f"Starting Data Ingestion (Batch Size: {BATCH_SIZE})...")
+    print(f"Starting Data Ingestion (Batch Size: {batch_size})...")
 
     # Consider each row/ abstract as a single document
-    first_batch = battery_data.select(range(0, BATCH_SIZE))
+    first_batch = battery_data.select(range(0, batch_size))
     docs = [
         Document(
             page_content=x["abstract"],
@@ -63,18 +67,18 @@ def data_ingestion():
     vector_db = Chroma.from_documents(
         documents=docs, embedding=embeddings, persist_directory=VECTOR_DB_DIR
     )
-    print(f"Progress: {BATCH_SIZE}/{len(battery_data)} documents indexed...")
+    print(f"Progress: {batch_size}/{len(battery_data)} documents indexed...")
 
-    if len(battery_data) > BATCH_SIZE:
-        for i in range(BATCH_SIZE, len(battery_data), BATCH_SIZE):
-            end_idx = min(i + BATCH_SIZE, len(battery_data))
+    if len(battery_data) > batch_size:
+        for i in range(batch_size, len(battery_data), batch_size):
+            end_idx = min(i + batch_size, len(battery_data))
             batch = battery_data.select(range(i, end_idx))
 
             batch_docs = [
                 Document(
                     page_content=x["abstract"],
                     metadata={
-                        "source": "batterydata/paper-abstracts",
+                        "source": x["journal"],
                         "category": x["label"],
                         "data_type": "scientific-abstract",
                     },
